@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="pueblo"></h1>
+    <h2 id="provincia"></h2>
+    <div id="tiempo"></div>
+    <script>
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            mostradorPueblo(this);
+            mostrarDias(this);
+        }
+        };
+        xhttp.open("GET", "meteorologia.xml", true);
+        xhttp.send();
+
+        function mostradorPueblo(xml){
+            var xmlDoc = xml.responseXML;
+            console.log(xmlDoc.getElementsByTagName("nombre"));
+            console.log(xmlDoc.getElementsByTagName("provincia"));
+            document.getElementById("pueblo").innerHTML = xmlDoc.getElementsByTagName("nombre")[0].childNodes[0].nodeValue;
+            document.getElementById("provincia").innerHTML = xmlDoc.getElementsByTagName("provincia")[0].childNodes[0].nodeValue;
+        }
+
+        function mostrarDias(xml){
+            var xmlDoc = xml.responseXML;
+            // For
+            var dias = xmlDoc.getElementsByTagName("dia")
+            for (let i = 0; i < dias.length ; i++) {
+                console.log(dias[i]);
+                document.getElementById("tiempo").innerHTML += dia[i].getAttributeNode("fecha");
+            }
+        }
+    </script>
+</body>
+</html>
